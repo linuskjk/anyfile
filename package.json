@@ -1,0 +1,23 @@
+{
+  "name": "anysend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Simple file upload website (Step 4: basic backend)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "file",
+    "upload",
+    "express"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.1.0",
+    "multer": "^1.4.5-lts.1",
+    "npm": "^11.6.0",
+    "start": "^5.1.0"
+  }
+}

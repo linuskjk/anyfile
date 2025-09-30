@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AnyFile</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Removed hardcoded window.ANYSEND_API_BASE because backend now served via reverse proxy same-origin.
+    The client script will attempt same-origin /api/health first and only show manual override panel if unreachable. -->
+  <script src="script.js?v=20250927a" defer></script>
+</head>
+<body>
+  <script>
+    (function(){
+      try {
+        var h = location.hostname.toLowerCase();
+        if (h === 'anyfile.uk' && location.pathname.startsWith('/anyfile')) {
+          location.replace('https://anyfile.uk/');
+        }
+      } catch(e) {}
+    })();
+  </script>
+  <div class="wrap">
+    <h1>AnyFile</h1>
+    <p class="hint">Choose a file and press Upload.</p>
+    
+    <div id="dropzone" class="dropzone" aria-label="Drop files here" tabindex="0">
+      <div class="dz-inner">
+        <strong>Drag & Drop</strong> files here or use the button below
+      </div>
+    </div>
+
+    <label class="custom-file-upload">
+      <input id="file-input" class="file_input" type="file" multiple />
+      Choose Files
+    </label>
+    
+    <div id="file-info" class="file_info">No file selected</div>
+
+    <ul id="file-list" class="file_list"></ul>
+    <div id="total-size" class="total_size">Total: 0 B</div>
+
+    <section id="upload-options" class="upload_options" aria-label="Upload options">
+      <h2>Upload Options</h2>
+      <div class="option_row">
+        <label for="whitelist-password">Whitelist password</label>
+        <div class="option_input_group">
+          <input id="whitelist-password" type="password" autocomplete="off" placeholder="Enter password for unlimited uploads" />
+          <button id="whitelist-apply" type="button">Apply</button>
+        </div>
+        <div id="whitelist-status" class="option_status" aria-live="polite"></div>
+      </div>
+      <div class="option_row">
+        <label for="expire-select">Auto-delete after</label>
+        <select id="expire-select">
+          <option value="1">1 day</option>
+          <option value="3">3 days</option>
+          <option value="7" selected>7 days (default)</option>
+          <option value="30">30 days (premium)</option>
+          <option value="0">Never (premium)</option>
+        </select>
+        <div id="expire-hint" class="option_hint">Standard users: files delete after 7 days.</div>
+      </div>
+      <label class="option_checkbox">
+        <input type="checkbox" id="expire-on-download" />
+        Delete after first download
+      </label>
+    </section>
+
+    <section id="recent-uploads" class="recent_uploads" aria-live="polite">
+      <h2>Recent Uploads</h2>
+      <div id="recent-status" class="recent_status"></div>
+      <ul id="recent-list" class="recent_list"></ul>
+    </section>
+    <div class="row">
+      <button id="clear-button" class="button-clear" type="button" disabled>Clear</button>
+    </div>
+
+    <button id="upload-button" class="upload_button" type="button" disabled>Upload</button>
+    <div id="upload-status" class="upload_status" aria-live="polite"></div>
+    <div id="quota-status" class="quota_status" aria-live="polite"></div>
+    <div id="upload-progress" class="upload_progress hidden" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div class="bar"></div>
+    </div>
+    <button id="upload-cancel" class="upload_cancel hidden" type="button">Cancel</button>
+
+
+    <div id="api-offline" class="api_offline hidden" aria-live="polite">
+      <h2>Backend Not Reachable</h2>
+      <p class="offline_msg">The upload API couldn't be reached at this origin. Start the server locally or enter the full base URL where it is running (must expose <code>/api/health</code>).</p>
+      <div class="api_form_row">
+        <input id="api-base-input" class="api_input" type="text" placeholder="https://your-domain.example or http://ip:3000" />
+        <button id="api-base-apply" class="api_apply" type="button">Try Connect</button>
+      </div>
+      <div id="api-probe-status" class="api_probe_status"></div>
+      <details class="offline_help">
+        <summary>Troubleshooting</summary>
+        <ul>
+          <li>If this page is served via HTTPS but your Node server is only HTTP, the browser will block mixed content. Use a reverse proxy (Synology) to provide HTTPS for the backend.</li>
+          <li>A 404 HTML response usually means you're hitting the wrong server (static host) not the Node process.</li>
+          <li>Test the health endpoint directly in a new tab: <code>https://your-domain.example/api/health</code></li>
+        </ul>
+      </details>
+    </div>
+  </div>
+</body>
+</html>
+
+
