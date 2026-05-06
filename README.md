@@ -29,7 +29,7 @@ npm start
 * Share tokens for public one‑time style links (not consumed but guess‑resistant): `/api/share/:storedName` -> `/api/d/:token`
 * Pretty short links: `/api/short/:storedName` -> `/f/:code` (wraps a share token)
 * Soft delete with tombstone recorded in `index.jsonl` and file removed from disk
-* Optional expiry via `ANYSEND_EXPIRE_DAYS` environment variable (expired files behave like 404)
+* Optional expiry via `ANYFILE_EXPIRE_DAYS` environment variable (expired files behave like 404)
 * JSONL append‑only metadata (`uploads/index.jsonl`, `uploads/share_tokens.jsonl`, `uploads/short_links.jsonl`)
 
 ## Environment Variables
@@ -38,7 +38,7 @@ npm start
 |-----|---------|
 | PORT | Server port (default 3000) |
 | ALLOWED_ORIGINS | Comma separated origins for CORS (default https://anyfile.uk) |
-| ANYSEND_EXPIRE_DAYS | If set (>0), files older than N days are treated as deleted/404 |
+| ANYFILE_EXPIRE_DAYS | If set (>0), files older than N days are treated as deleted/404 |
 
 ## Key Endpoints
 
