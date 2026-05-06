@@ -1,4 +1,4 @@
-# AnySend
+# AnyFile
 
 Privacy‑oriented self‑hosted file drop with per‑user listing, owner‑only downloads, share tokens, short links, soft deletion, and optional expiry.
 
